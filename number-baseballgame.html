@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자야구게임</title>
+    <link rel="stylesheet" href="number-baseballgame.css">
+</head>
+<body>
+  
+  <div class="screen">
+    <img src="https://ifh.cc/g/8BlVx4.jpg" alt="">
+      <div class="title">숫자 야구 게임</div>
+      <div class="main">
+        <div class="check-screen">
+            <div class="screen-1"></div>
+            <div class="screen-2"></div>
+            <div class="screen-3"></div>
+        </div>
+        <div class="score-screen">
+            <div class="message"> 게임 시작- 숫자버튼을 눌러주세요! </div>
+            <div class="strike0">S</div>
+            <div class="ball0">B</div>
+            <div class="out0">OUT</div>
+            <div class="strike1">S</div>
+            <div class="ball1">B</div>
+            <div class="out1">OUT</div>
+            <div class="strike2">S</div>
+            <div class="ball2">B</div>
+            <div class="out2">OUT</div>
+        </div>
+        <div class="score-list">
+            <div class="list-box-1">
+                <div class="list-1">
+                  <div class="input-numbers">
+                    <!-- <div class="input-number-1"></div>
+                    <div class="input-number-2"></div>
+                    <div class="input-number-3"></div> -->
+                  </div>
+                  <div class="mini-score">
+                    <div class="mini-strike0">S</div>
+                    <div class="mini-ball0">B</div>
+                    <div class="mini-out0">OUT</div>
+                    <div class="mini-strike1">S</div>
+                    <div class="mini-ball1">B</div>
+                    <div class="mini-out1">OUT</div>
+                    <div class="mini-strike2">S</div>
+                    <div class="mini-ball2">B</div>
+                    <div class="mini-out2">OUT</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="number-button">
+        <div class="number-btn">
+          <div class="btn-1">
+              <button class="num">0</button>
+              <button class="num">1</button>
+              <button class="num">2</button>
+              <button class="num">3</button>
+              <button class="num">4</button>
+          </div>
+          <div class="btn-2">
+              <button class="num">5</button>
+              <button class="num">6</button>
+              <button class="num">7</button>
+              <button class="num">8</button>
+              <button class="num">9</button>
+          </div>
+        </div>          
+        <div class="output-btn">
+            <button id="back">←</button>
+            <button id="enter">Enter</button>
+        </div>
+      </div>
+  </div>
+  <script>
+    let selectedNumbers = [];
+    const ballStrikeOut = [];
+    const answer = [];
+    let num_box = [];
+    const numbers = [];
+    const list_box = [];
+    const strikeSave = [];
+    const listBackground = document.querySelector('.list-1');
+    const list = document.querySelector('.input-numbers');
+    const scoreContainer = document.querySelector('.mini-score');
+    const message = document.querySelector('.message');
+    const screens = [
+        document.querySelector('.screen-1'),
+        document.querySelector('.screen-2'),
+        document.querySelector('.screen-3')
+    ];  
+    const num_btn = document.querySelectorAll('.num');
+    const enter = document.querySelector('#enter');
+    const back = document.querySelector('#back');
+
+    // 무작위로 숫자 3개를 뽑는다
+    for (let n = 0; n < 9; n += 1) {
+      numbers.push(n)
+    }
+   
+    for (let n = 0; n < 3; n += 1) {
+      const index = Math.floor(Math.random() * numbers.length)
+      answer.push(numbers[index]);
+      numbers.splice(index, 1);
+    }
+   
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+      
+      let filledScreens = 0;
+      num_btn.forEach(button => {
+        button.addEventListener('click', function handler() { 
+          
+          const selectedNumber = parseInt(this.textContent);
+          if (selectedNumbers.includes(selectedNumber)) {
+          alert('이미 선택된 숫자입니다.'); 
+          return;
+          }
+          selectedNumbers.push(selectedNumber); // 중복된 숫자 막아두기
+          
+          // 숫자 버튼 세개 클릭 
+          if (filledScreens < screens.length) {
+            screens[filledScreens].textContent = this.textContent;
+            filledScreens++;
+          }
+        });
+      });
+   
+      // 엔터 클릭 시 클릭한 숫자 저장  
+      enter.addEventListener('click', function handler() {
+        message.style.display = 'none'
+        num_box = []; 
+        for (let i = 0; i < screens.length; i++) {
+          const numChanged = parseFloat(screens[i].textContent);
+          num_box.push(numChanged);
+        }
+         // 숫자를 두개 또는 하나만 클릭 후 엔터를 누르면 안내창이 뜬다.
+        num_box = num_box.filter(value => !isNaN(parseFloat(value)));
+        if (num_box.length < 3) {
+          window.alert('숫자 세개를 선택해주세요.');
+          return; 
+        }
+        setTimeout(() => {
+        // 볼 스트 아웃 초기화 
+        for (let i = 0; i < num_box.length; i++) {
+          let strikeRemove = document.querySelector(`.strike${i}`);
+          if (strikeRemove) {
+            strikeRemove.style.display = '';
+          }
+
+          let ballRemove = document.querySelector(`.ball${i}`);
+          if (ballRemove) {
+            ballRemove.style.display = '';
+  
+          }
+
+          let outRemove = document.querySelector(`.out${i}`);
+          if (outRemove) {
+            outRemove.style.display = '';
+  
+          }
+        } 
+        }, 1000);
+        
+        // 볼 스트 아웃 판정하기
+        for (let i = 0; i < num_box.length; i++) {
+ 
+          if (num_box[i] === answer[i]) { // 같은 위치 같은 숫자 = 스트
+            let strike = document.querySelector(`.strike${i}`);
+            strike.style.display = 'flex';
+            strike.style.left = `${145 + i * 70}px`;
+            ballStrikeOut.push(strike); 
+            
+
+          } else if (answer.includes(num_box[i])) { // 같은 숫자만 포함 = 볼
+            let ball = document.querySelector(`.ball${i}`);
+            ball.style.display = 'flex';
+            ball.style.left = `${145 + i * 70}px`;
+            ballStrikeOut.push(ball); 
+
+          } else { // 숫자가 없으면 = 아웃
+            let out = document.querySelector(`.out${i}`);
+            out.style.display = 'flex';
+            out.style.left = `${145 + i * 70}px`;
+            ballStrikeOut.push(out); 
+          }
+        }
+
+        // 모두 스트라이크 = 홈런 
+        if (num_box.length === answer.length && num_box.every((value, index) => value === answer[index])) {
+          window.alert('홈런 입니다!');
+        } 
+      
+        // 엔터 누른 후 1초 뒤에 기록지가 뜨고   
+        setTimeout(() => {
+          
+          list.style.display = 'flex';
+          listBackground.style.display = 'flex';
+          
+          let clone = listBackground.cloneNode(true);
+          let listBoxContainer = document.querySelector('.score-list');
+          listBoxContainer.appendChild(clone);
+          
+          // 복제된 요소에 입력된 숫자와 결과 표시
+          const clonedList = clone.querySelector('.input-numbers');
+          clonedList.innerHTML = '';
+          num_box.forEach(num => {
+            const sheet = document.createElement('div');
+            sheet.textContent = num;
+            clonedList.appendChild(sheet);
+          });
+          // 볼 스트 아웃 표시를 기록한다
+          for (let i = 0; i < ballStrikeOut.length; i++) {
+            let strikeCheck = document.querySelector(`.strike${i}`);
+            let ballCheck = document.querySelector(`.ball${i}`);
+            let outCheck = document.querySelector(`.out${i}`);
+            let miniStrike = document.querySelector(`.mini-strike${i}`);
+            let miniBall = document.querySelector(`.mini-ball${i}`);
+            let miniOut = document.querySelector(`.mini-out${i}`);
+            
+            if (ballStrikeOut[i] === strikeCheck) {
+              miniStrike.style.display = 'flex';
+              let miniStrikeCloned = miniStrike.cloneNode(true);
+              
+            
+            } else if (ballStrikeOut[i] === ballCheck) {
+              miniBall.style.display = 'flex';
+
+            } else if (ballStrikeOut[i] === outCheck) {
+              miniOut.style.display = 'flex';
+            }
+          } 
+          
+
+
+        }, 1000); 
+  
+         // ballStrikeOut 배열 저장 
+        if (ballStrikeOut.length > 3) {
+          ballStrikeOut.splice(0, ballStrikeOut.length - 3);
+        }
+        setTimeout(() => {
+          screens.forEach(screen => {
+            screen.textContent = '';
+          });
+          // 상태 초기화 
+            list_box.length = 0;
+            filledScreens = 0;
+            selectedNumbers.length = 0;
+        }, 1000); // 숫자판이 1초 뒤에 사라진다.
+
+        
+        });
+        
+        // 지우기 누르면 숫자판에서 하나씩 숫자가 사라진다. 
+        let clickCount = 0;
+        back.addEventListener('click', function handler() { 
+          clickCount++;
+          if (clickCount === 1) {
+            screens[2].textContent = '';
+           
+          } else if (clickCount === 2) {
+            screens[1].textContent = '';
+         
+          } else if (clickCount === 3) {
+            screens[0].textContent = '';
+          }  
+          filledScreens = 0;
+        });  
+
+        // 게임이 10판이 되면 패배했다고 뜬다. 
+        // 첫화면에서 숫자야구 룰 설명하는 창을 띄운다. 
+       // enter.removeEventListener('click', handler);
+    });   
+  </script>
+</body>
+</html>
