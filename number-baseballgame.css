@@ -1,0 +1,279 @@
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SEBANG_Gothic_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body {
+    font-family: 'TheJamsil5Bold';
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+img {
+    width: 480px;
+    height: 900px;
+    position: absolute;
+    z-index: -1000;
+    opacity: 75%;
+}
+.screen {  
+    border: 1px solid #a1a1a1;
+    width: 480px;
+    height: 900px; 
+}
+.title {
+    font-size: 30px;
+    display: flex; 
+    justify-content: center;
+    margin-top: 15px;
+}
+.main {
+    height: 680px;
+    margin-top: 15px;
+}
+.check-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+.screen-1 {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border: 2px solid rgb(188, 188, 188);
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.screen-2 {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border: 2px solid rgb(188, 188, 188);
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.screen-3 {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border: 2px solid rgb(188, 188, 188);
+    border-radius: 8px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.score-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    position: relative;
+}
+.ball0, .ball1, .ball2 {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(68, 234, 82);
+    border-radius: 100%;
+    margin-right: 10px;
+    color: white;
+    font-size: 20px;
+}
+.strike0, .strike1, .strike2 {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(247, 229, 72);
+    border-radius: 100%;
+    margin-right: 10px;
+    color: white;
+    font-size: 20px;
+}
+.out0, .out1, .out2 {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(198, 58, 58);
+    border-radius: 8px;
+    margin-right: 10px;
+    color: white;
+}
+.score-list {
+    width: 100%;
+    height: 100px;
+    margin-top: 15px;
+    
+}
+.list-box-1 {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    
+}
+.list-1, .list-2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 46%;
+    height: 85px;
+    background-color: white;
+    border: 1px solid rgb(188, 188, 188);
+    opacity: 100%;
+    font-size: 25px;
+}
+
+.input-numbers {
+    width: 30%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+}
+.input-number-2 {
+    margin-left: 4px;
+}
+.input-number-3 {
+    margin-left: 8px;
+}
+.mini-score {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+.mini-ball0, .mini-ball1, .mini-ball2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(68, 234, 82);
+    border-radius: 100%;
+    margin-left: 5px;
+}
+.mini-strike0, .mini-strike1, .mini-strike2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(247, 229, 72);
+    border-radius: 100%;
+    margin-left: 5px;
+}
+.mini-out0, .mini-out1, .mini-out2 {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(198, 58, 58);
+    border-radius: 4px;
+    font-size: 10px;
+    color: white;
+    margin-left: 5px;
+}
+/* .list-2 {
+    display: flex;
+    width: 46%;
+    height: 85px;
+    background-color: white;
+    margin-left: 10px;
+    border: 1px solid rgb(188, 188, 188);
+    opacity: 90%;
+} */
+.number-button {
+    height: 150px;
+    display: flex; 
+    background-color: rgba(255, 255, 255, 0.646);
+    
+}
+.number-btn {
+    padding: 8px;
+
+}
+.btn-1 {
+    padding: 6px;
+}
+.btn-2 {
+    padding: 6px;
+}
+button {
+    font-family: 'SEBANG_Gothic_Bold';
+    width: 58px;
+    height: 58px;
+    padding: 15px;
+    font-size: 25px;
+    margin-right: 5px;
+    background-color: #161053;
+    border: none;
+    border-radius: 7px;
+    color: white;
+}
+button:hover {
+    background-color: #01022c;
+}
+.output-btn {
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 13px;
+}
+.output-btn > button {
+    width: 110px;
+}
+#back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: #515152;
+}
+#enter {
+    height: 160px;
+    margin-top: 14px;
+    background-color: #020205;
+}
+#enter:hover {
+    background-color: #575757;
+}
+.message {
+    font-family: 'Pretendard-Regular';
+    font-size: 25px;
+}
